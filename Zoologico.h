@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
+#include <stdexcept>
 
 using namespace std;
 
@@ -18,11 +19,10 @@ class Zoologico {
 
 private:
     vector<Habitat*> AdHabitat;
-    string nombre;
-
 public:
     Zoologico()=default;
     void agregarHabitat(string habitat);
+    vector<string> listaHabitats = {"desertico", "selvatico", "polar", "acuatico"};
 };
 
 
