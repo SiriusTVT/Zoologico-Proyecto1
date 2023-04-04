@@ -32,6 +32,8 @@ public:
     void agDatosAnimal();
 
     bool Comprobante(string habitat);
+    string transformarMinuscula(string especie);
+
     void borrarMapa(string llave);
 };
 

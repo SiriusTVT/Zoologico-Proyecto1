@@ -15,10 +15,16 @@ bool Zoologico::Comprobante(string habitat) {
     return false;
 }
 
+string Zoologico::transformarMinuscula(string especie) {
+    string cambiarDato = especie;
+    transform(cambiarDato.begin(), cambiarDato.end(), cambiarDato.begin(), [](unsigned char c){return ::tolower(c);});
+    return cambiarDato;
+}
+
 void Zoologico::agregarHabitat(string habitat) { //Se agrega Habitat: desértico, selvático, polar y acuático.
-    string habitatM = habitat;
     bool comprobante;
-    transform(habitatM.begin(), habitatM.end(), habitatM.begin(), [](unsigned char c){return ::tolower(c);});
+
+    string habitatM = transformarMinuscula(habitat);
 
     comprobante=Zoologico::Comprobante(habitatM);
     if (comprobante == true)
@@ -38,7 +44,9 @@ void Zoologico::agregarAnimal(string nombre, string especie, string habitat, int
     Animal *pAgregarAnimal = new Animal(nombre, especie, habitat, edad);
     bool comprobante;
 
-    comprobante = Zoologico::Comprobante(habitat);
+    string habitat1 = transformarMinuscula(habitat);
+
+    comprobante = Zoologico::Comprobante(habitat1);
     if (comprobante == false)
     {
         cout << "El Habitat del animal no coincide con los datos disponibles" << endl;
@@ -47,7 +55,8 @@ void Zoologico::agregarAnimal(string nombre, string especie, string habitat, int
     {
         this->contadorAnimal += 1;
         this->mapaAnimal.insert(make_pair(Zoologico::contadorAnimal, pAgregarAnimal)); //Datos de Cada animal
-        this->mapaAnimalHabitat.insert(make_pair(especie, habitat)); //Datos de Especie y Habitat
+        this->mapaAnimalHabitat.insert(make_pair(especie, habitat1)); //Datos de Especie y Habitat
+        cout<<"Se agrego Correctamente"<<endl;
     }
 }
 
