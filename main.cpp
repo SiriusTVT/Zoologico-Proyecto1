@@ -26,6 +26,7 @@ void menu(Zoologico *Inicio){
     do {
         cout<<"1. Agregar habitat"<<endl;
         cout<<"2. Agregar Animal"<<endl;
+        cout<<"3. Mostrar Datos Animales"<<endl;
 
         cin>>entrada;
 
@@ -35,6 +36,9 @@ void menu(Zoologico *Inicio){
                 break;
             case 2:
                 Inicio->agDatosAnimal(); //Agregar un animal aun habitat
+                break;
+            case 3:
+                Inicio->mostrarDatosAnimal();
                 break;
         }
     } while (entrada!=0);

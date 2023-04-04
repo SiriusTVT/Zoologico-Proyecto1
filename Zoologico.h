@@ -20,7 +20,6 @@ class Zoologico {
 private:
     vector<Habitat*> AdHabitat;
     unordered_map<int, Animal*> mapaAnimal;
-    unordered_map<string, string> mapaAnimalHabitat;
     int contadorAnimal=0;
 
 public:
@@ -30,6 +29,8 @@ public:
 
     void agregarAnimal(string nombre, string especie, string habitat, int edad);
     void agDatosAnimal();
+
+    void mostrarDatosAnimal();
 
     bool Comprobante(string habitat);
     string transformarMinuscula(string especie);

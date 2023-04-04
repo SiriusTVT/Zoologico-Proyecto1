@@ -54,8 +54,7 @@ void Zoologico::agregarAnimal(string nombre, string especie, string habitat, int
     else
     {
         this->contadorAnimal += 1;
-        this->mapaAnimal.insert(make_pair(Zoologico::contadorAnimal, pAgregarAnimal)); //Datos de Cada animal
-        this->mapaAnimalHabitat.insert(make_pair(especie, habitat1)); //Datos de Especie y Habitat
+        this->mapaAnimal.insert(make_pair(Zoologico::contadorAnimal, pAgregarAnimal)); //Datos de animal
         cout<<"Se agrego Correctamente"<<endl;
     }
 }
@@ -68,8 +67,8 @@ void Zoologico::agDatosAnimal() {
     {
         cout<<"No hay Habitat Existente"<<endl;
     }
-    else {
-
+    else
+    {
         cin.ignore();
         cout << "Nombre:" << endl;
         getline(cin, nombre, '\n');
@@ -83,5 +82,13 @@ void Zoologico::agDatosAnimal() {
 
         agregarAnimal(nombre, especie, habitat, edad);
     }
+}
+
+void Zoologico::mostrarDatosAnimal() {
+    for (auto const& elemento: mapaAnimal)
+    {
+        cout<<elemento.first<<" : "<<"Habitat: "<<elemento.second->getEspecie()<<", Especie: "<<elemento.second->getEspecie()<<endl;
+    }
+    cout<<endl;
 }
 
