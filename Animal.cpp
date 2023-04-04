@@ -4,8 +4,8 @@
 
 #include "Animal.h"
 
-Animal::Animal(const string &nombre, const string &especie, const string &habitat)
-: nombre(nombre), especie(especie), habitat(habitat) {}
+Animal::Animal(const string &nombre, const string &especie, const string &habitat, int edad)
+: nombre(nombre), especie(especie), habitat(habitat), edad(edad) {}
 
 const string &Animal::getNombre() const {
     return nombre;

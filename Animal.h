@@ -18,7 +18,7 @@ private:
     int edad;
 public:
     Animal()=default;
-    Animal(const string &nombre, const string &especie, const string &habitat);
+    Animal(const string &nombre, const string &especie, const string &habitat, int edad);
 
     virtual ~Animal();
 

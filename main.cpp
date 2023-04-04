@@ -25,12 +25,16 @@ void menu(Zoologico *Inicio){
     int entrada;
     do {
         cout<<"1. Agregar habitat"<<endl;
+        cout<<"2. Agregar Animal"<<endl;
 
         cin>>entrada;
 
         switch (entrada) {
             case 1:
-                agHabitat(Inicio);
+                agHabitat(Inicio); //Agregar Nueva Habitat
+                break;
+            case 2:
+                Inicio->agDatosAnimal(); //Agregar un animal aun habitat
                 break;
         }
     } while (entrada!=0);
