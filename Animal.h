@@ -15,10 +15,15 @@ private:
     string nombre;
     string especie;
     string habitat;
+    string comer;
+    string juego;
     int edad;
+    int dormir;
 public:
     Animal()=default;
-    Animal(const string &nombre, const string &especie, const string &habitat, int edad);
+
+    Animal(const string &nombre, const string &especie, const string &habitat, const string &comer, const string &juego,
+           int edad, int dormir);
 
     virtual ~Animal();
 
@@ -38,7 +43,17 @@ public:
 
     void setEdad(int edad);
 
+    const string &getComer() const;
 
+    void setComer(const string &comer);
+
+    const string &getJuego() const;
+
+    void setJuego(const string &juego);
+
+    int getDormir() const;
+
+    void setDormir(int dormir);
 };
 
 

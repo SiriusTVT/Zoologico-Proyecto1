@@ -4,8 +4,7 @@
 
 #include "Animal.h"
 
-Animal::Animal(const string &nombre, const string &especie, const string &habitat, int edad)
-: nombre(nombre), especie(especie), habitat(habitat), edad(edad) {}
+
 
 const string &Animal::getNombre() const {
     return nombre;
@@ -42,5 +41,35 @@ int Animal::getEdad() const {
 void Animal::setEdad(int edad) {
     Animal::edad = edad;
 }
+
+const string &Animal::getComer() const {
+    return comer;
+}
+
+void Animal::setComer(const string &comer) {
+    Animal::comer = comer;
+}
+
+const string &Animal::getJuego() const {
+    return juego;
+}
+
+void Animal::setJuego(const string &juego) {
+    Animal::juego = juego;
+}
+
+int Animal::getDormir() const {
+    return dormir;
+}
+
+void Animal::setDormir(int dormir) {
+    Animal::dormir = dormir;
+}
+
+Animal::Animal(const string &nombre, const string &especie, const string &habitat, const string &comer,
+               const string &juego, int edad, int dormir) : nombre(nombre), especie(especie), habitat(habitat),
+                                                            comer(comer), juego(juego), edad(edad), dormir(dormir) {}
+
+
 
 

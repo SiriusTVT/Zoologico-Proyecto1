@@ -27,15 +27,20 @@ public:
     void agregarHabitat(string habitat);
     vector<string> listaHabitats = {"desertico", "selvatico", "polar", "acuatico"};
 
-    void agregarAnimal(string nombre, string especie, string habitat, int edad);
+    void agregarAnimal(string nombre, string especie, string habitat, int edad, string comida, string juego, int dormir);
     void agDatosAnimal();
 
     void mostrarDatosAnimal();
 
     bool Comprobante(string habitat);
+    bool ComprobanteListaHabitat(string habitat);
     string transformarMinuscula(string especie);
 
-    void borrarMapa(string llave);
+    void AlimentarAnimales();
+    void DormirAnimales();
+    void JugarAnimales();
+
+    void Acciones();
 };
 
 
