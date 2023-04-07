@@ -37,7 +37,7 @@ void Zoologico::agregarHabitat(string habitat) { //Se agrega Habitat: desértico
 
     string habitatM = transformarMinuscula(habitat);
 
-    comprobante=Zoologico::Comprobante(habitatM);
+    comprobante = Comprobante(habitatM); //Comprueba si el habitat agregada coincide con la lista de habitats disponibles
     if (comprobante == true)
     {
         Habitat *pAgregarHabitat = new Habitat(habitatM);
@@ -57,7 +57,7 @@ void Zoologico::agregarAnimal(string nombre, string especie, string habitat, int
 
     string habitat1 = transformarMinuscula(habitat);
 
-    comprobante = Zoologico::ComprobanteListaHabitat(habitat1);
+    comprobante = ComprobanteListaHabitat(habitat1); //Comprueba si el habitat del animal coincide con la lista habitat
     if (comprobante == false)
     {
         cout << "El Habitat del animal no coincide con los datos disponibles" << endl;
@@ -115,17 +115,18 @@ void Zoologico::mostrarDatosAnimal() {
     else
     {
         for (auto const &elemento: mapaAnimal) {
-            cout << elemento.first << " : " << "Habitat: " << elemento.second->getHabitat() << ", Especie: "
-                 << elemento.second->getEspecie()<< ", Edad: "<< elemento.second->getEdad()<< ", Tipo de alimento: "
-                 << elemento.second->getComer()<< ", Duerme en horas: "<< elemento.second->getDormir()<< ", A jugado: "
-                 << elemento.second ->getJuego()<< endl;
+            cout << elemento.first << " : " << "Habitat: " << elemento.second->getHabitat()
+            << ", Nombre: " << elemento.second->getNombre() << ", Especie: " << elemento.second->getEspecie()
+            << ", Edad: "<< elemento.second->getEdad()<< ", Tipo de alimento: " << elemento.second->getComer()
+            << ", Duerme en horas: "<< elemento.second->getDormir()<< ", A jugado: " << elemento.second ->getJuego()
+            << endl;
         }
         cout << endl;
     }
 }
 
 void Zoologico::Acciones() {
-    if (mapaAnimal.empty()){cout<<"No hay animales Disponible"<<endl;}
+    if (mapaAnimal.empty()){cout<<"No hay animales Disponibles"<<endl;}
     else {
         int entrada;
         do {
@@ -157,7 +158,7 @@ void Zoologico::Acciones() {
 
 void Zoologico::AlimentarAnimales() {
     int entrada;
-    string alimento;
+    string alimento, validacion;
 
     mostrarDatosAnimal();
     cout<<"A quien desea alimentar:"<<endl;
@@ -167,23 +168,30 @@ void Zoologico::AlimentarAnimales() {
     cout<<"Tipo de Alimento:"<<endl;
     getline(cin, alimento, '\n');
 
-    try
+    auto iter = mapaAnimal.find(entrada);
+    if (iter != mapaAnimal.end() and iter->second->getComer()==alimento)
     {
-        auto iter = mapaAnimal.find(entrada);
-        if (iter->second->getComer()==alimento)
-        {
-            cout<<"Se dio de comer correctamente al "<<iter->second->getEspecie()<<endl;
-        }
-        else
-        {
-            cout<<"El tipo de alimento: "<<alimento<<" No es adecuado para el animal escogido"<<endl;
-        }
-    }
-    catch (const out_of_range& e)
-    {
-        cout<<"No se Encontro el Animal"<<endl;
-    }
+        cout<<"Se dio de comer correctamente al "<<iter->second->getEspecie()<<endl;
 
+        cout<<"Se desea cambiar la alimentacion del "<<iter->second->getEspecie()<<":"<<endl;
+        getline(cin, validacion, '\n');
+        validacion = transformarMinuscula(validacion);
+        if (validacion=="si")
+        {
+            cout<<"Ingrese nueva alimentacion:"<<endl;
+            getline(cin, alimento, '\n');
+            iter->second->setComer(alimento);
+            cout<<"Se actualizo Correctamente"<<endl;
+        }
+    }
+    else if (iter != mapaAnimal.end())
+    {
+        cout<<"El tipo de alimento: "<<alimento<<" No es adecuado para el animal escogido"<<endl;
+    }
+    else
+    {
+        cerr<<"No se encontro el animal"<<endl;
+    }
 
 }
 void Zoologico::DormirAnimales() {
@@ -194,28 +202,32 @@ void Zoologico::DormirAnimales() {
     cout<<"Escoja un animal:"<<endl;
     cin>>entrada;
 
-    cout<<"Que horas de sueno Estima para el animal:"<<endl;
+    cout<<"Cuantas horas Estima para el animal:"<<endl;
     cin>>valor;
-    try
+
+
+    auto iter = mapaAnimal.find(entrada);
+
+    if (iter != mapaAnimal.end())
     {
-        auto iter = mapaAnimal.find(entrada);
-        valor1=iter->second->getDormir()*2;
-        if (iter->second->getDormir()<=valor and valor1>=valor) //Se estima un Minimo y un Maximo permitido
-        {
-            iter->second->setDormir(valor);
-            cout<<"Se cuadro correctamente las horas, ahora el "<<iter->second->getEspecie()
-            <<", Duerme: "<<iter->second->getDormir()<<" Horas"<<endl;
-        }
-        else
-        {
-            cout<<"Las horas, No son suficientes o sobre-pasan maximo permitido"<<endl;
-        }
+        valor1 = iter->second->getDormir() * 2;
     }
-    catch (const out_of_range e)
+    if (iter != mapaAnimal.end() and iter->second->getDormir()<=valor and valor1>=valor) //Se estima un Minimo y un Maximo permitido
     {
-        cout<<"No se Encontro el Animal"<<endl;
+        iter->second->setDormir(valor);
+        cout << "Se cuadro correctamente las horas, ahora el " << iter->second->getEspecie()
+        << ", Duerme: " << iter->second->getDormir() << " Horas" << endl;
+    }
+    else if (iter != mapaAnimal.end())
+    {
+        cout << "El numero de horas debe estar entre " << iter->second->getDormir() << " y " << valor1 << endl;
+    }
+    else
+    {
+        cerr<<"No se encontro el animal"<<endl;
     }
 }
+
 void Zoologico::JugarAnimales() {
     int entrada;
 
@@ -223,23 +235,19 @@ void Zoologico::JugarAnimales() {
     mostrarDatosAnimal();
     cout<<"Con quien desea jugar:"<<endl;
     cin>>entrada;
-    try
-    {
-        auto iter = mapaAnimal.find(entrada);
-        if (iter->second->getJuego()=="no")
-        {
-            iter->second->setJuego("si");
-            cout<<"El "<<iter->second->getEspecie()<<" a jugado"<<endl;
-        }
-        else
-        {
-            cout<<"El "<<iter->second->getEspecie()<<" ya jugo"<<endl;
-        }
 
-    }
-    catch (const out_of_range e)
+    auto iter = mapaAnimal.find(entrada);
+    if (iter != mapaAnimal.end() && iter->second->getJuego() == "no")
     {
-        cout<<"No se Encontro el Animal"<<endl;
+        iter->second->setJuego("si");
+        cout<<"El "<<iter->second->getEspecie()<<" ha jugado"<<endl;
+    }
+    else if (iter != mapaAnimal.end())
+    {
+        cout<<"El "<<iter->second->getEspecie()<<" ya jugo"<<endl;
+    }
+    else
+    {
+        cerr<<"No se encontro el animal"<<endl;
     }
 }
-
