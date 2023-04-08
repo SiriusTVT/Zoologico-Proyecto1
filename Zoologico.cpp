@@ -157,7 +157,7 @@ void Zoologico::Acciones() {
 }
 
 void Zoologico::AlimentarAnimales() {
-    int entrada, entrada2;
+    int entrada, entrada2, entrada3;
     string alimento, validacion, entrada1;
 
     cin.ignore();
@@ -182,12 +182,16 @@ void Zoologico::AlimentarAnimales() {
 
                 cout << "Se desea cambiar la alimentacion del " << iter->second->getEspecie() << ":" << endl;
                 getline(cin, validacion, '\n');
-                validacion = transformarMinuscula(validacion);
-                if (validacion == "si") {
-                    cout << "Ingrese nueva alimentacion:" << endl;
-                    getline(cin, alimento, '\n');
-                    iter->second->setComer(alimento);
-                    cout << "Se actualizo Correctamente" << endl;
+                entrada3 = ValidarString(validacion);
+                if (entrada3==0){cout<<"Entrada no Valida"<<endl;}
+                else {
+                    validacion = transformarMinuscula(validacion);
+                    if (validacion == "si") {
+                        cout << "Ingrese nueva alimentacion:" << endl;
+                        getline(cin, alimento, '\n');
+                        iter->second->setComer(alimento);
+                        cout << "Se actualizo Correctamente" << endl;
+                    }
                 }
             } else if (iter != mapaAnimal.end()) {
                 cout << "El tipo de alimento: " << alimento << " No es adecuado para el animal escogido" << endl;
@@ -199,59 +203,63 @@ void Zoologico::AlimentarAnimales() {
 }
 void Zoologico::DormirAnimales() {
     int entrada, valor, valor1;
+    string entrada1, valor2;
 
     cin.ignore();
     mostrarDatosAnimal();
     cout<<"Escoja un animal:"<<endl;
-    cin>>entrada;
+    getline(cin, entrada1, '\n');
+    entrada = validarInt(entrada1);
+    if (entrada==0){cout<<"Entrada no Valida"<<endl;}
+    else {
 
-    cout<<"Cuantas horas Estima para el animal:"<<endl;
-    cin>>valor;
+        cout << "Cuantas horas Estima para el animal:" << endl;
+        getline(cin, valor2, '\n');
+        valor = validarInt(valor2);
+        if (valor==0){cout<<"Entrada no Valida"<<endl;}
+        else {
 
+            auto iter = mapaAnimal.find(entrada);
 
-    auto iter = mapaAnimal.find(entrada);
-
-    if (iter != mapaAnimal.end())
-    {
-        valor1 = iter->second->getDormir() * 2;
-    }
-    if (iter != mapaAnimal.end() and iter->second->getDormir()<=valor and valor1>=valor) //Se estima un Minimo y un Maximo permitido
-    {
-        iter->second->setDormir(valor);
-        cout << "Se cuadro correctamente las horas, ahora el " << iter->second->getEspecie()
-        << ", Duerme: " << iter->second->getDormir() << " Horas" << endl;
-    }
-    else if (iter != mapaAnimal.end())
-    {
-        cout << "El numero de horas debe estar entre " << iter->second->getDormir() << " y " << valor1 << endl;
-    }
-    else
-    {
-        cerr<<"No se encontro el animal"<<endl;
+            if (iter != mapaAnimal.end()) {
+                valor1 = iter->second->getDormir() * 2;
+            }
+            if (iter != mapaAnimal.end() and iter->second->getDormir() <= valor and
+                valor1 >= valor) //Se estima un Minimo y un Maximo permitido
+            {
+                iter->second->setDormir(valor);
+                cout << "Se cuadro correctamente las horas, ahora el " << iter->second->getEspecie()
+                     << ", Duerme: " << iter->second->getDormir() << " Horas" << endl;
+            } else if (iter != mapaAnimal.end()) {
+                cout << "El numero de horas debe estar entre " << iter->second->getDormir() << " y " << valor1 << endl;
+            } else {
+                cerr << "No se encontro el animal" << endl;
+            }
+        }
     }
 }
 
 void Zoologico::JugarAnimales() {
     int entrada;
+    string entrada1;
 
     cin.ignore();
     mostrarDatosAnimal();
     cout<<"Con quien desea jugar:"<<endl;
-    cin>>entrada;
+    getline(cin, entrada1, '\n');
+    entrada = validarInt(entrada1);
+    if (entrada==0){cout<<"Entrada no Valida"<<endl;}
+    else {
 
-    auto iter = mapaAnimal.find(entrada);
-    if (iter != mapaAnimal.end() && iter->second->getJuego() == "no")
-    {
-        iter->second->setJuego("si");
-        cout<<"El "<<iter->second->getEspecie()<<" ha jugado"<<endl;
-    }
-    else if (iter != mapaAnimal.end())
-    {
-        cout<<"El "<<iter->second->getEspecie()<<" ya jugo"<<endl;
-    }
-    else
-    {
-        cerr<<"No se encontro el animal"<<endl;
+        auto iter = mapaAnimal.find(entrada);
+        if (iter != mapaAnimal.end() && iter->second->getJuego() == "no") {
+            iter->second->setJuego("si");
+            cout << "El " << iter->second->getEspecie() << " ha jugado" << endl;
+        } else if (iter != mapaAnimal.end()) {
+            cout << "El " << iter->second->getEspecie() << " ya jugo" << endl;
+        } else {
+            cerr << "No se encontro el animal" << endl;
+        }
     }
 }
 
@@ -259,7 +267,7 @@ int Zoologico::validarInt(string entrada) {
     int entrada1;
     for (char c: entrada)
     {
-        if (!isdigit(c))
+        if (!isdigit(c)) //Cuando la entrada es diferente a un Dijito
         {
             return 0;
         }
@@ -271,7 +279,7 @@ int Zoologico::validarInt(string entrada) {
 int Zoologico::ValidarString(string entrada) {
     for (char c: entrada)
     {
-        if (isdigit(c))
+        if (isdigit(c)) //Cuando la entrada es un Digito
         {
             return 0;
         }
