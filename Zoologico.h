@@ -41,6 +41,9 @@ public:
     void JugarAnimales();
 
     void Acciones();
+
+    int validarInt(string entrada);
+    int ValidarString(string entrada);
 };
 
 
