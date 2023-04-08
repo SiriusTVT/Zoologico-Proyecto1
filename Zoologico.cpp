@@ -16,7 +16,7 @@ bool Zoologico::Comprobante(string habitat) { //Comprobante inicial de los habit
 }
 
 bool Zoologico::ComprobanteListaHabitat(string habitat) { //Comprobante despues de a ver agregado un habitat al vector
-    for (auto const& elemento:AdHabitat)
+    for (auto const& elemento:AdHabitat) // Comprueba la existencia del habitat agregado
     {
         if (elemento->getHabitat() ==  habitat)
         {
@@ -35,15 +35,15 @@ string Zoologico::transformarMinuscula(string especie) { //Pone las entradas en 
 void Zoologico::agregarHabitat(string habitat) { //Se agrega Habitat: desértico, selvático, polar y acuático.
     bool comprobante, existe;
 
-    existe = ComprobanteListaHabitat(habitat);
+    existe = ComprobanteListaHabitat(habitat); //Evitar entradas repetidas
 
-    string habitatM = transformarMinuscula(habitat);
+    string habitatM = transformarMinuscula(habitat); //Pone en minuscula para coincidir palabras
 
     comprobante = Comprobante(habitatM); //Comprueba si el habitat agregada coincide con la lista de habitats disponibles
     if (comprobante == true and existe == false)
     {
         Habitat *pAgregarHabitat = new Habitat(habitatM);
-        this->AdHabitat.push_back(pAgregarHabitat);
+        this->AdHabitat.push_back(pAgregarHabitat); //Agrega un nuevo habitat
         cout << "Se agregado el Habitat Correctamente" << endl;
         cout<<endl;
     }
@@ -63,7 +63,7 @@ void Zoologico::agregarAnimal(string nombre, string especie, string habitat, int
     Animal *pAgregarAnimal = new Animal(nombre, especie, habitat, comida, juego, edad, dormir);
     bool comprobante;
 
-    string habitat1 = transformarMinuscula(habitat);
+    string habitat1 = transformarMinuscula(habitat); //Pone en minuscula para coincidir palabras
 
     comprobante = ComprobanteListaHabitat(habitat1); //Comprueba si el habitat del animal coincide con la lista habitat
     if (comprobante == false)
@@ -73,18 +73,18 @@ void Zoologico::agregarAnimal(string nombre, string especie, string habitat, int
     else
     {
         this->contadorAnimal += 1;
-        this->mapaAnimal.insert(make_pair(Zoologico::contadorAnimal, pAgregarAnimal)); //Datos de animal
+        this->mapaAnimal.insert(make_pair(Zoologico::contadorAnimal, pAgregarAnimal)); //Agrega Datos del animal en un mapa
         cout<<"Se agrego Correctamente"<<endl;
     }
 }
 
-void Zoologico::agDatosAnimal() {
+void Zoologico::agDatosAnimal() { //Se ingresa los datos por usuario, sobre los datos del animal
     string nombre, especie, habitat, comida, juego;
     int edad, dormir;
 
     string valor;
 
-    if (AdHabitat.empty())
+    if (AdHabitat.empty()) //Comprueba Existencia de algun habitat
     {
         cout<<"No hay Habitat Existente"<<endl;
     }
@@ -115,7 +115,7 @@ void Zoologico::agDatosAnimal() {
     }
 }
 
-void Zoologico::agDatosHabitat() {
+void Zoologico::agDatosHabitat() { //Ingresa los datos del habitat agregar
     string habitat;
     int entrada;
 
@@ -129,14 +129,14 @@ void Zoologico::agDatosHabitat() {
     cout<<"Habitat:"<<endl;
     getline(cin, habitat, '\n');
     entrada = ValidarString(habitat);
-    if (entrada==0){cout<<"Entrada no Valida"<<endl;}
+    if (entrada==0){cout<<"Entrada no Valida"<<endl;} // Valida la entrada si es correcta
     else
     {
         agregarHabitat(habitat);
     }
 }
 
-void Zoologico::mostrarDatosAnimal() {
+void Zoologico::mostrarDatosAnimal() { // Muestra datos del animal en pantalla
     if (mapaAnimal.empty())
     {
         cout<<"No hay Animales Diponibles"<<endl;
@@ -154,7 +154,7 @@ void Zoologico::mostrarDatosAnimal() {
     }
 }
 
-void Zoologico::Acciones() {
+void Zoologico::Acciones() { //Menu alterno de Acciones
     if (mapaAnimal.empty()){cout<<"No hay animales Disponibles"<<endl;}
     else {
         int entrada;
@@ -195,24 +195,24 @@ void Zoologico::AlimentarAnimales() {
     cout<<"A quien desea alimentar:"<<endl;
     getline(cin, entrada1, '\n');
     entrada = validarInt(entrada1);
-    if (entrada==0){cout<<"Entrada no Valida"<<endl;}
+    if (entrada==0){cout<<"Entrada no Valida"<<endl;} // Valida la entrada si es correcta
     else
     {
         cout << "Tipo de Alimento:" << endl;
         getline(cin, alimento, '\n');
         entrada2 = ValidarString(alimento);
-        if (entrada2==0){cout<<"Entrada no Valida"<<endl;}
+        if (entrada2==0){cout<<"Entrada no Valida"<<endl;} // Valida la entrada si es correcta
         else
         {
 
-            auto iter = mapaAnimal.find(entrada);
+            auto iter = mapaAnimal.find(entrada); //Encuentra el animal en el mapa
             if (iter != mapaAnimal.end() and iter->second->getComer() == alimento) {
                 cout << "Se dio de comer correctamente al " << iter->second->getEspecie() << endl;
 
                 cout << "Se desea cambiar la alimentacion del " << iter->second->getEspecie() << ":" << endl;
                 getline(cin, validacion, '\n');
                 entrada3 = ValidarString(validacion);
-                if (entrada3==0){cout<<"Entrada no Valida"<<endl;}
+                if (entrada3==0){cout<<"Entrada no Valida"<<endl;} // Valida la entrada si es correcta
                 else {
                     validacion = transformarMinuscula(validacion);
                     if (validacion == "si") {
@@ -239,29 +239,28 @@ void Zoologico::DormirAnimales() {
     cout<<"Escoja un animal:"<<endl;
     getline(cin, entrada1, '\n');
     entrada = validarInt(entrada1);
-    if (entrada==0){cout<<"Entrada no Valida"<<endl;}
+    if (entrada==0){cout<<"Entrada no Valida"<<endl;} // Valida la entrada si es correcta
     else {
 
         cout << "Cuantas horas Estima para el animal:" << endl;
         getline(cin, valor2, '\n');
         valor = validarInt(valor2);
-        if (valor==0){cout<<"Entrada no Valida"<<endl;}
+        if (valor==0){cout<<"Entrada no Valida"<<endl;} // Valida la entrada si es correcta
         else {
 
-            auto iter = mapaAnimal.find(entrada);
+            auto iter = mapaAnimal.find(entrada); //Encuentra el animal en el mapa
 
-            if (iter != mapaAnimal.end()) {
-                valor1 = iter->second->getDormir() * 2;
+            if (iter != mapaAnimal.end()) { //Verificar la existencia de la llave en el mapa, para evitar errores de segmentacion
+                valor1 = iter->second->getDormir() * 2; //Es necesario la condicion anterior para evitar errores
             }
-            if (iter != mapaAnimal.end() and iter->second->getDormir() <= valor and
-                valor1 >= valor) //Se estima un Minimo y un Maximo permitido
+            if (iter != mapaAnimal.end() and iter->second->getDormir() <= valor and valor1 >= valor) //Se estima un Minimo y un Maximo permitido
             {
-                iter->second->setDormir(valor);
+                iter->second->setDormir(valor); // Se ajusta la nueva hora al animal
                 cout << "Se cuadro correctamente las horas, ahora el " << iter->second->getEspecie()
                      << ", Duerme: " << iter->second->getDormir() << " Horas" << endl;
-            } else if (iter != mapaAnimal.end()) {
+            } else if (iter != mapaAnimal.end()) { //Si existe la llave en el mapa, pero no coincide la hora correcta
                 cout << "El numero de horas debe estar entre " << iter->second->getDormir() << " y " << valor1 << endl;
-            } else {
+            } else { //No se encuentra el animal en el vector
                 cerr << "No se encontro el animal" << endl;
             }
         }
@@ -277,22 +276,22 @@ void Zoologico::JugarAnimales() {
     cout<<"Con quien desea jugar:"<<endl;
     getline(cin, entrada1, '\n');
     entrada = validarInt(entrada1);
-    if (entrada==0){cout<<"Entrada no Valida"<<endl;}
+    if (entrada==0){cout<<"Entrada no Valida"<<endl;} // Valida la entrada si es correcta
     else {
 
-        auto iter = mapaAnimal.find(entrada);
-        if (iter != mapaAnimal.end() && iter->second->getJuego() == "no") {
-            iter->second->setJuego("si");
+        auto iter = mapaAnimal.find(entrada); //Encuentra el animal en el mapa
+        if (iter != mapaAnimal.end() && iter->second->getJuego() == "no") { //Existe en el mapa y aun no ha jugado
+            iter->second->setJuego("si"); //Cambia el estado a jugado
             cout << "El " << iter->second->getEspecie() << " ha jugado" << endl;
-        } else if (iter != mapaAnimal.end()) {
+        } else if (iter != mapaAnimal.end()) { //Existe en el mapa, pero ya cumple la condicion de que si jugo
             cout << "El " << iter->second->getEspecie() << " ya jugo" << endl;
-        } else {
+        } else { //No se encuentra el animal en el vector
             cerr << "No se encontro el animal" << endl;
         }
     }
 }
 
-int Zoologico::validarInt(string entrada) {
+int Zoologico::validarInt(string entrada) { //Metodo de validacion de entradas para un int
     int entrada1;
     for (char c: entrada)
     {
@@ -305,7 +304,7 @@ int Zoologico::validarInt(string entrada) {
     return entrada1;
 }
 
-int Zoologico::ValidarString(string entrada) {
+int Zoologico::ValidarString(string entrada) { //Metodo de validacion de entradas para un string
     for (char c: entrada)
     {
         if (isdigit(c)) //Cuando la entrada es un Digito
