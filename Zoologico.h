@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
-#include <stdexcept>
 
 using namespace std;
 
@@ -25,6 +24,7 @@ private:
 public:
     Zoologico()=default;
     void agregarHabitat(string habitat);
+    void agDatosHabitat();
     vector<string> listaHabitats = {"desertico", "selvatico", "polar", "acuatico"};
 
     void agregarAnimal(string nombre, string especie, string habitat, int edad, string comida, string juego, int dormir);

@@ -4,23 +4,6 @@
 
 #include "Zoologico.h"
 
-void agHabitat(Zoologico *AgregarH){
-    string habitat;
-
-    cout<<"Lista de Habitats Disponibles:"<<endl;
-    for (auto const& elemento : AgregarH->listaHabitats) {
-        cout<<" - "<<elemento<<"";
-    }
-    cout<<endl;
-
-    cin.ignore();
-    cout<<"Habitat:"<<endl;
-    getline(cin, habitat, '\n');
-
-    AgregarH->agregarHabitat(habitat);
-}
-
-
 void menu(Zoologico *Inicio){
     int entrada;
     do {
@@ -33,7 +16,7 @@ void menu(Zoologico *Inicio){
 
         switch (entrada) {
             case 1:
-                agHabitat(Inicio); //Agregar Nueva Habitat
+                Inicio->agDatosHabitat(); //Agregar Nueva Habitat
                 break;
             case 2:
                 Inicio->agDatosAnimal(); //Agregar un animal aun habitat

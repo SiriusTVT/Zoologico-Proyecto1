@@ -33,16 +33,24 @@ string Zoologico::transformarMinuscula(string especie) { //Pone las entradas en 
 }
 
 void Zoologico::agregarHabitat(string habitat) { //Se agrega Habitat: desértico, selvático, polar y acuático.
-    bool comprobante;
+    bool comprobante, existe;
+
+    existe = ComprobanteListaHabitat(habitat);
 
     string habitatM = transformarMinuscula(habitat);
 
     comprobante = Comprobante(habitatM); //Comprueba si el habitat agregada coincide con la lista de habitats disponibles
-    if (comprobante == true)
+    if (comprobante == true and existe == false)
     {
         Habitat *pAgregarHabitat = new Habitat(habitatM);
         this->AdHabitat.push_back(pAgregarHabitat);
         cout << "Se agregado el Habitat Correctamente" << endl;
+        cout<<endl;
+    }
+    else if (existe == true)
+    {
+        cout<<"El dato YA EXISTE"<<endl;
+        cout<<endl;
     }
     else
     {
@@ -104,6 +112,27 @@ void Zoologico::agDatosAnimal() {
         cin >> dormir;
 
         agregarAnimal(nombre, especie, habitat, edad, comida, juego, dormir);
+    }
+}
+
+void Zoologico::agDatosHabitat() {
+    string habitat;
+    int entrada;
+
+    cout<<"Lista de Habitats Disponibles:"<<endl;
+    for (auto const& elemento : listaHabitats) {
+        cout<<" - "<<elemento<<"";
+    }
+
+    cout<<endl;
+    cin.ignore();
+    cout<<"Habitat:"<<endl;
+    getline(cin, habitat, '\n');
+    entrada = ValidarString(habitat);
+    if (entrada==0){cout<<"Entrada no Valida"<<endl;}
+    else
+    {
+        agregarHabitat(habitat);
     }
 }
 
