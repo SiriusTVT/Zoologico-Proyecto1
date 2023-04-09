@@ -65,7 +65,7 @@ void Zoologico::agregarAnimal(string nombre, string especie, string habitat, int
 
     string habitat1 = transformarMinuscula(habitat); //Pone en minuscula para coincidir palabras
 
-    comprobante = ComprobanteListaHabitat(habitat1); //Comprueba si el habitat del animal coincide con la lista habitat
+    comprobante = ComprobanteListaHabitat(habitat1); //Comprueba si el habitat del animal coincide con la lista habitat existente
     if (comprobante == false)
     {
         cout << "El Habitat del animal no coincide con los datos disponibles" << endl;
@@ -79,8 +79,8 @@ void Zoologico::agregarAnimal(string nombre, string especie, string habitat, int
 }
 
 void Zoologico::agDatosAnimal() { //Se ingresa los datos por usuario, sobre los datos del animal
-    string nombre, especie, habitat, comida, juego;
-    int edad, dormir;
+    string nombre, especie, habitat, comida, juego, edad1, dormir1;
+    int edad, dormir, entrada, entrada2=1;
 
     string valor;
 
@@ -107,11 +107,31 @@ void Zoologico::agDatosAnimal() { //Se ingresa los datos por usuario, sobre los 
         juego = valor;
 
         cout << "Edad:" << endl;
-        cin >> edad;
+        getline(cin, edad1, '\n');
         cout << "Cuanto duerme en el dia:" << endl;
-        cin >> dormir;
+        getline(cin, dormir1, '\n');
 
-        agregarAnimal(nombre, especie, habitat, edad, comida, juego, dormir);
+        entrada = ValidarString(nombre);
+        if (entrada==0){cout<<"Entrada no Valida del nombre"<<endl; entrada2=0;} // Valida la entrada si es correcta
+        entrada = ValidarString(especie);
+        if (entrada==0){cout<<"Entrada no Valida de la especie"<<endl; entrada2=0;} // Valida la entrada si es correcta
+        entrada = ValidarString(habitat);
+        if (entrada==0){cout<<"Entrada no Valida del habitat"<<endl; entrada2=0;} // Valida la entrada si es correcta
+        entrada = ValidarString(comida);
+        if (entrada==0){cout<<"Entrada no Valida del alimento"<<endl; entrada2=0;} // Valida la entrada si es correcta
+        entrada = ValidarString(juego);
+        if (entrada==0){cout<<"Entrada no Valida del juego"<<endl; entrada2=0;} // Valida la entrada si es correcta
+        entrada = validarInt(edad1);
+        edad = entrada;
+        if (entrada==0){cout<<"Entrada no Valida de la edad"<<endl; entrada2=0;} // Valida la entrada si es correcta
+        entrada = validarInt(dormir1);
+        dormir = entrada;
+        if (entrada==0){cout<<"Entrada no Valida de dormir"<<endl; entrada2=0;} // Valida la entrada si es correcta
+
+        if (entrada2 == 1) //No va acceder con cualquiera que se invalide
+        {
+            agregarAnimal(nombre, especie, habitat, edad, comida, juego, dormir);
+        } else {cout<<"No se Agrego, entradas Invalidas"<<endl;}
     }
 }
 
