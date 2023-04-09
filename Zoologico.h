@@ -27,10 +27,18 @@ public:
     void agDatosHabitat();
     vector<string> listaHabitats = {"desertico", "selvatico", "polar", "acuatico"};
 
+    unordered_map<string, vector<string>> alimentos = {
+            {"herbivoro", {"hierbas", "hojas", "frutas"}},
+            {"carnivoro", {"carne", "pescado", "insectos"}},
+            {"omnivoro", {"verduras", "carne", "huevos"}}
+    };
+
+
     void agregarAnimal(string nombre, string especie, string habitat, int edad, string comida, string juego, int dormir);
     void agDatosAnimal();
 
     void mostrarDatosAnimal();
+    void mostrarDatosAlimento();
 
     bool Comprobante(string habitat);
     bool ComprobanteListaHabitat(string habitat);

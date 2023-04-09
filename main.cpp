@@ -11,6 +11,7 @@ void menu(Zoologico *Inicio){
         cout<<"2. Agregar Animal"<<endl;
         cout<<"3. Mostrar Dato Animal"<<endl;
         cout<<"4. Acciones"<<endl;
+        cout<<"5. Mostrar alimentos"<<endl;
 
         cin>>entrada;
 
@@ -27,6 +28,8 @@ void menu(Zoologico *Inicio){
             case 4:
                 Inicio->Acciones(); //Menu emergente para realizar acciones
                 break;
+            case 5:
+                Inicio->mostrarDatosAlimento(); //Mostrar los datos alimentos
             default:
                 break;
         }

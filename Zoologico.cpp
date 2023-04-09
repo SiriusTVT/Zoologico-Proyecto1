@@ -98,7 +98,7 @@ void Zoologico::agDatosAnimal() { //Se ingresa los datos por usuario, sobre los 
         cout << "Habitat:" << endl;
         getline(cin, habitat, '\n');
 
-        cout << "Tipo alimentacion:" << endl;
+        cout << "Clasificacion alimentaria:" << endl;
         getline(cin, comida, '\n');
         cout << "El animal a jugado ?" << endl;
         getline(cin, juego, '\n');
@@ -131,7 +131,7 @@ void Zoologico::agDatosAnimal() { //Se ingresa los datos por usuario, sobre los 
         if (entrada2 == 1) //No va acceder con cualquiera que se invalide
         {
             agregarAnimal(nombre, especie, habitat, edad, comida, juego, dormir);
-        } else {cout<<"No se Agrego, entradas Invalidas"<<endl;}
+        } else {cout<<"No se Agrego, hay entradas Invalidas"<<endl;}
     }
 }
 
@@ -174,6 +174,18 @@ void Zoologico::mostrarDatosAnimal() { // Muestra datos del animal en pantalla
     }
 }
 
+void Zoologico::mostrarDatosAlimento() {
+    for (auto const &clave: alimentos)
+    {
+        cout<<clave.first<<" : "<<"Alimentos: ";
+        for (auto const &valor: clave.second)
+        {
+            cout<<valor<<", ";
+        }
+        cout<<endl;
+    }
+}
+
 void Zoologico::Acciones() { //Menu alterno de Acciones
     if (mapaAnimal.empty()){cout<<"No hay animales Disponibles"<<endl;}
     else {
@@ -206,12 +218,14 @@ void Zoologico::Acciones() { //Menu alterno de Acciones
 }
 
 void Zoologico::AlimentarAnimales() {
-    int entrada, entrada2, entrada3;
+    int entrada, entrada2, entrada3, validacion2=0, contadorAlimento=0;
     string alimento, validacion, entrada1;
 
     cin.ignore();
 
     mostrarDatosAnimal();
+    mostrarDatosAlimento();
+
     cout<<"A quien desea alimentar:"<<endl;
     getline(cin, entrada1, '\n');
     entrada = validarInt(entrada1);
@@ -226,9 +240,23 @@ void Zoologico::AlimentarAnimales() {
         {
 
             auto iter = mapaAnimal.find(entrada); //Encuentra el animal en el mapa
-            if (iter != mapaAnimal.end() and iter->second->getComer() == alimento) {
-                cout << "Se dio de comer correctamente al " << iter->second->getEspecie() << endl;
 
+            if (iter != mapaAnimal.end())
+            {
+                for (const auto &elemento: alimentos[iter->second->getComer()])
+                {
+                    if (alimento == elemento)
+                    {
+                        validacion2 = 1;
+                        break;
+                    }
+                    contadorAlimento+=1;
+                }
+            }
+
+            if (iter != mapaAnimal.end() and validacion2 == 1) {
+
+                cout << "Se dio de comer correctamente al " << iter->second->getEspecie() << endl;
                 cout << "Se desea cambiar la alimentacion del " << iter->second->getEspecie() << ":" << endl;
                 getline(cin, validacion, '\n');
                 entrada3 = ValidarString(validacion);
@@ -238,7 +266,9 @@ void Zoologico::AlimentarAnimales() {
                     if (validacion == "si") {
                         cout << "Ingrese nueva alimentacion:" << endl;
                         getline(cin, alimento, '\n');
-                        iter->second->setComer(alimento);
+
+                        alimentos[iter->second->getComer()][contadorAlimento]=alimento;
+
                         cout << "Se actualizo Correctamente" << endl;
                     }
                 }
@@ -250,6 +280,7 @@ void Zoologico::AlimentarAnimales() {
         }
     }
 }
+
 void Zoologico::DormirAnimales() {
     int entrada, valor, valor1;
     string entrada1, valor2;
