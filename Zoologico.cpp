@@ -247,10 +247,10 @@ void Zoologico::AlimentarAnimales() {
                 {
                     if (alimento == elemento)
                     {
-                        validacion2 = 1;
+                        validacion2 = 1; //Valida si lo encuentra el alimento en el mapa con la clave
                         break;
                     }
-                    contadorAlimento+=1;
+                    contadorAlimento+=1; //valida la posicion donde se encuentra el valor de la llave
                 }
             }
 
@@ -267,7 +267,7 @@ void Zoologico::AlimentarAnimales() {
                         cout << "Ingrese nueva alimentacion:" << endl;
                         getline(cin, alimento, '\n');
 
-                        alimentos[iter->second->getComer()][contadorAlimento]=alimento;
+                        alimentos[iter->second->getComer()][contadorAlimento]=alimento; //Cambio los valores del mapa alimentos
 
                         cout << "Se actualizo Correctamente" << endl;
                     }
